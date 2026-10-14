@@ -1,0 +1,391 @@
+{
+    "codebase_version": "v2.1",
+    "robot_type": "yam_dual_arm",
+    "total_episodes": 30,
+    "total_frames": 18064,
+    "total_tasks": 1,
+    "total_videos": 120,
+    "total_chunks": 1,
+    "chunks_size": 1000,
+    "fps": 30,
+    "splits": {
+        "train": "0:30"
+    },
+    "data_path": "data/chunk-{episode_chunk:03d}/episode_{episode_index:06d}.parquet",
+    "video_path": "videos/chunk-{episode_chunk:03d}/{video_key}/episode_{episode_index:06d}.mp4",
+    "features": {
+        "observation.images.head": {
+            "dtype": "video",
+            "shape": [
+                480,
+                848,
+                3
+            ],
+            "names": [
+                "height",
+                "width",
+                "channels"
+            ],
+            "info": {
+                "video.height": 480,
+                "video.width": 848,
+                "video.codec": "h264",
+                "video.pix_fmt": "yuv420p",
+                "video.is_depth_map": false,
+                "video.fps": 30,
+                "video.channels": 3,
+                "has_audio": false
+            }
+        },
+        "observation.state": {
+            "dtype": "float32",
+            "shape": [
+                39
+            ],
+            "names": [
+                "left_joint_0",
+                "left_joint_1",
+                "left_joint_2",
+                "left_joint_3",
+                "left_joint_4",
+                "left_joint_5",
+                "left_gripper",
+                "right_joint_0",
+                "right_joint_1",
+                "right_joint_2",
+                "right_joint_3",
+                "right_joint_4",
+                "right_joint_5",
+                "right_gripper",
+                "gaze_x_norm",
+                "gaze_y_norm",
+                "gaze_valid",
+                "gaze_origin_x",
+                "gaze_origin_y",
+                "gaze_origin_z",
+                "gaze_direction_x",
+                "gaze_direction_y",
+                "gaze_direction_z",
+                "gaze_left_valid",
+                "gaze_left_confidence",
+                "gaze_left_origin_x",
+                "gaze_left_origin_y",
+                "gaze_left_origin_z",
+                "gaze_left_direction_x",
+                "gaze_left_direction_y",
+                "gaze_left_direction_z",
+                "gaze_right_valid",
+                "gaze_right_confidence",
+                "gaze_right_origin_x",
+                "gaze_right_origin_y",
+                "gaze_right_origin_z",
+                "gaze_right_direction_x",
+                "gaze_right_direction_y",
+                "gaze_right_direction_z"
+            ]
+        },
+        "action": {
+            "dtype": "float32",
+            "shape": [
+                14
+            ],
+            "names": [
+                "left_joint_0",
+                "left_joint_1",
+                "left_joint_2",
+                "left_joint_3",
+                "left_joint_4",
+                "left_joint_5",
+                "left_gripper",
+                "right_joint_0",
+                "right_joint_1",
+                "right_joint_2",
+                "right_joint_3",
+                "right_joint_4",
+                "right_joint_5",
+                "right_gripper"
+            ]
+        },
+        "teleoperation.matrices.left_controller": {
+            "dtype": "float32",
+            "shape": [
+                4,
+                4
+            ],
+            "names": [
+                "row",
+                "column"
+            ]
+        },
+        "teleoperation.matrices.right_controller": {
+            "dtype": "float32",
+            "shape": [
+                4,
+                4
+            ],
+            "names": [
+                "row",
+                "column"
+            ]
+        },
+        "teleoperation.matrices.head": {
+            "dtype": "float32",
+            "shape": [
+                4,
+                4
+            ],
+            "names": [
+                "row",
+                "column"
+            ]
+        },
+        "teleoperation.buttons": {
+            "dtype": "float32",
+            "shape": [
+                8
+            ],
+            "names": [
+                "left_trigger",
+                "left_squeeze",
+                "left_aButton",
+                "left_bButton",
+                "right_trigger",
+                "right_squeeze",
+                "right_aButton",
+                "right_bButton"
+            ]
+        },
+        "observation.images.left_wrist": {
+            "dtype": "video",
+            "shape": [
+                270,
+                480,
+                3
+            ],
+            "names": [
+                "height",
+                "width",
+                "channels"
+            ],
+            "info": {
+                "video.height": 270,
+                "video.width": 480,
+                "video.codec": "h264",
+                "video.pix_fmt": "yuv420p",
+                "video.is_depth_map": false,
+                "video.fps": 30,
+                "video.channels": 3,
+                "has_audio": false
+            }
+        },
+        "observation.images.right_wrist": {
+            "dtype": "video",
+            "shape": [
+                270,
+                480,
+                3
+            ],
+            "names": [
+                "height",
+                "width",
+                "channels"
+            ],
+            "info": {
+                "video.height": 270,
+                "video.width": 480,
+                "video.codec": "h264",
+                "video.pix_fmt": "yuv420p",
+                "video.is_depth_map": false,
+                "video.fps": 30,
+                "video.channels": 3,
+                "has_audio": false
+            }
+        },
+        "observation.images.waist": {
+            "dtype": "video",
+            "shape": [
+                240,
+                424,
+                3
+            ],
+            "names": [
+                "height",
+                "width",
+                "channels"
+            ],
+            "info": {
+                "video.height": 240,
+                "video.width": 424,
+                "video.codec": "h264",
+                "video.pix_fmt": "yuv420p",
+                "video.is_depth_map": false,
+                "video.fps": 30,
+                "video.channels": 3,
+                "has_audio": false
+            }
+        },
+        "observation.gaze.active_source": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "observation.gaze.world": {
+            "dtype": "float32",
+            "shape": [
+                13
+            ],
+            "names": [
+                "valid",
+                "status",
+                "method",
+                "x",
+                "y",
+                "z",
+                "depth_m",
+                "depth_spread_m",
+                "depth_valid_fraction",
+                "src_u_px",
+                "src_v_px",
+                "display_latency_ms",
+                "sample_age_ms"
+            ]
+        },
+        "observation.gaze.proj.head": {
+            "dtype": "float32",
+            "shape": [
+                6
+            ],
+            "names": [
+                "in_image",
+                "u_px",
+                "v_px",
+                "z_m",
+                "visible",
+                "measured_depth_m"
+            ]
+        },
+        "observation.gaze.proj.left_wrist": {
+            "dtype": "float32",
+            "shape": [
+                6
+            ],
+            "names": [
+                "in_image",
+                "u_px",
+                "v_px",
+                "z_m",
+                "visible",
+                "measured_depth_m"
+            ]
+        },
+        "observation.gaze.proj.right_wrist": {
+            "dtype": "float32",
+            "shape": [
+                6
+            ],
+            "names": [
+                "in_image",
+                "u_px",
+                "v_px",
+                "z_m",
+                "visible",
+                "measured_depth_m"
+            ]
+        },
+        "observation.gaze.proj.waist": {
+            "dtype": "float32",
+            "shape": [
+                6
+            ],
+            "names": [
+                "in_image",
+                "u_px",
+                "v_px",
+                "z_m",
+                "visible",
+                "measured_depth_m"
+            ]
+        },
+        "observation.camera_poses.head": {
+            "dtype": "float32",
+            "shape": [
+                4,
+                4
+            ],
+            "names": [
+                "row",
+                "column"
+            ]
+        },
+        "observation.camera_poses.left_wrist": {
+            "dtype": "float32",
+            "shape": [
+                4,
+                4
+            ],
+            "names": [
+                "row",
+                "column"
+            ]
+        },
+        "observation.camera_poses.right_wrist": {
+            "dtype": "float32",
+            "shape": [
+                4,
+                4
+            ],
+            "names": [
+                "row",
+                "column"
+            ]
+        },
+        "observation.camera_poses.waist": {
+            "dtype": "float32",
+            "shape": [
+                4,
+                4
+            ],
+            "names": [
+                "row",
+                "column"
+            ]
+        },
+        "timestamp": {
+            "dtype": "float32",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "frame_index": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "episode_index": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "index": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        },
+        "task_index": {
+            "dtype": "int64",
+            "shape": [
+                1
+            ],
+            "names": null
+        }
+    }
+}

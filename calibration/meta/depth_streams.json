@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "created_by": "record_dual_arm_lerobot.py",
+  "path_template": "depth/chunk-{episode_chunk:03d}/{depth_key}/episode_{episode_index:06d}.mkv",
+  "frame_alignment": "one depth frame per dataset frame_index of the same episode",
+  "streams": {
+    "observation.depth.head": {
+      "role": "head",
+      "serial": "346522070736",
+      "aligned_to": "observation.images.head",
+      "depth_scale": 0.0010000000474974513,
+      "width": 848,
+      "height": 480,
+      "fps": 30,
+      "codec": "ffv1",
+      "pix_fmt": "gray16le",
+      "container": "mkv",
+      "units": "raw RealSense depth units aligned to the colour image; metres = value * depth_scale; 0 = invalid",
+      "intrinsics": {
+        "serial": "346522070736",
+        "width": 848,
+        "height": 480,
+        "fx": 605.2725830078125,
+        "fy": 604.6886596679688,
+        "cx": 436.335205078125,
+        "cy": 249.22946166992188,
+        "model": "inverse_brown_conrady",
+        "coeffs": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "observation.depth.left_wrist": {
+      "role": "left_wrist",
+      "serial": "335122270643",
+      "aligned_to": "observation.images.left_wrist",
+      "depth_scale": 9.999999747378752e-05,
+      "width": 480,
+      "height": 270,
+      "fps": 30,
+      "codec": "ffv1",
+      "pix_fmt": "gray16le",
+      "container": "mkv",
+      "units": "raw RealSense depth units aligned to the colour image; metres = value * depth_scale; 0 = invalid",
+      "intrinsics": {
+        "serial": "335122270643",
+        "width": 480,
+        "height": 270,
+        "fx": 245.70272827148438,
+        "fy": 245.39007568359375,
+        "cx": 240.16392517089844,
+        "cy": 135.4022674560547,
+        "model": "inverse_brown_conrady",
+        "coeffs": [
+          -0.05130457133054733,
+          0.06108543276786804,
+          -0.00041890915599651635,
+          0.0007371804676949978,
+          -0.021091986447572708
+        ]
+      }
+    },
+    "observation.depth.right_wrist": {
+      "role": "right_wrist",
+      "serial": "335122270449",
+      "aligned_to": "observation.images.right_wrist",
+      "depth_scale": 9.999999747378752e-05,
+      "width": 480,
+      "height": 270,
+      "fps": 30,
+      "codec": "ffv1",
+      "pix_fmt": "gray16le",
+      "container": "mkv",
+      "units": "raw RealSense depth units aligned to the colour image; metres = value * depth_scale; 0 = invalid",
+      "intrinsics": {
+        "serial": "335122270449",
+        "width": 480,
+        "height": 270,
+        "fx": 245.70652770996094,
+        "fy": 245.4296875,
+        "cx": 240.86404418945312,
+        "cy": 132.1194610595703,
+        "model": "inverse_brown_conrady",
+        "coeffs": [
+          -0.05189650133252144,
+          0.06423475593328476,
+          -0.0005145116592757404,
+          0.00017474222113378346,
+          -0.022623306140303612
+        ]
+      }
+    },
+    "observation.depth.waist": {
+      "role": "waist",
+      "serial": "013422062138",
+      "aligned_to": "observation.images.waist",
+      "depth_scale": 0.0010000000474974513,
+      "width": 424,
+      "height": 240,
+      "fps": 30,
+      "codec": "ffv1",
+      "pix_fmt": "gray16le",
+      "container": "mkv",
+      "units": "raw RealSense depth units aligned to the colour image; metres = value * depth_scale; 0 = invalid",
+      "intrinsics": {
+        "serial": "013422062138",
+        "width": 424,
+        "height": 240,
+        "fx": 307.4685363769531,
+        "fy": 307.4278259277344,
+        "cx": 209.62355041503906,
+        "cy": 119.49354553222656,
+        "model": "inverse_brown_conrady",
+        "coeffs": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "cdm": {}
+}
