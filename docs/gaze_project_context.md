@@ -1,7 +1,7 @@
 # GazeGLIDE project context / 项目背景
 
-Last updated: 2026-10-14.
-最后更新：2026-10-14。
+Last updated: 2026-10-15.
+最后更新：2026-10-15。
 
 This is a portable project handoff distilled from the user's background brief, subsequent discussion, and a read-only repository inspection.
 本文档汇总用户提供的项目背景、后续讨论及对仓库的只读检查结果，供跨设备和跨会话接续工作。
@@ -10,12 +10,14 @@ This is a portable project handoff distilled from the user's background brief, s
 
 - **Current phase: background alignment and documentation.** The user explicitly stopped feature implementation and then authorized creation of this document and the root `AGENTS.md`.
   **当前阶段：背景沟通与文档整理。** 用户明确叫停了功能实现，随后授权创建本文档及仓库根目录的 `AGENTS.md`。
+- Working codebase: focus on `gazeglide/` and its vendored `third_party/i2rt/`; leave the sibling standalone `../i2rt/` checkout outside the current development scope. GazeGLIDE still uses the `i2rt` Python package, whose installed source should match the vendored runtime when configuring the robot environment.
+  工作代码库：以 `gazeglide/` 及其内置的 `third_party/i2rt/` 为主；旁边独立的 `../i2rt/` 仓库不纳入当前开发范围。GazeGLIDE 仍使用 `i2rt` Python 包，配置机器人环境时应确保安装来源与内置运行代码一致。
 - Earlier gaze implementation drafts were deleted at the user's request; no gaze feature from that work remains or has been validated.
   此前的 gaze 实现草稿已按用户要求删除；该部分没有留下已交付或已验证的 gaze 功能。
 - Gaze logging, display-to-image mapping, and four-view replay remain a **proposed future milestone**, not an active implementation task.
   Gaze 记录、显示坐标到图像坐标的映射及四视角回放仍是**拟议的后续阶段**，不是当前正在执行的实现任务。
-- The user has now supplied `calibration/meta/`; camera calibration and dataset metadata were inspected on 2026-10-14 (see the supplementary findings in section 7). Headset setup and the referenced recording/calibration source code remain unavailable in the inspected checkout.
-  用户现已提供 `calibration/meta/`；已于 2026-10-14 检查相机标定和数据集元数据（见第 7 节补充发现）。头显配置及文件引用的录制／标定源代码在已检查的仓库中仍未找到。
+- The user has now supplied `calibration/meta/`; camera calibration and dataset metadata were inspected on 2026-10-14 (see the supplementary findings in section 7). The standalone `i2rt/` checkout and GazeGLIDE's vendored runtime were compared on 2026-10-15; neither contains the named native-gaze recording script or camera-calibration source. Headset setup remains unresolved.
+  用户现已提供 `calibration/meta/`；已于 2026-10-14 检查相机标定和数据集元数据（见第 7 节补充发现）。已于 2026-10-15 比较独立 `i2rt/` 仓库和 GazeGLIDE 内置运行代码；两者均未找到元数据引用的原生 gaze 录制脚本或相机标定源代码。头显配置仍待确认。
 
 ## 2. Research goal / 研究目标
 
@@ -149,6 +151,26 @@ These are findings from local JSON/JSONL contents and consistency checks, not li
   内嵌标定包的四台相机内参均对应 640×480，而 `runtime.stream_intrinsics` 对应表中的图像尺寸。四个视角的运行时内参与尺寸均与 [depth_streams.json](../calibration/meta/depth_streams.json) 一致，尺寸也与 [info.json](../calibration/meta/info.json) 相符。使用时应匹配实际图像流；不能未经相应映射就将标定包的 640×480 内参直接用于这些录制尺寸。
 - Dataset metadata declares 30 episodes, 18,064 frames, four RGB streams at 30 fps, and the task “Use both arms to cap the marker”; episode lengths sum to the declared frame count. The schema includes gaze state, active source, world gaze, per-view projections, and camera poses. Schema/configuration and aggregate statistics do not establish per-frame validity, synchronization, display mapping, or successful assistance. `display_latency_ms=0.0` is a stored setting, not a measured latency result.
   数据集元数据声明有 30 个回合、18,064 帧、四路 30 fps 的 RGB 图像，以及双臂盖马克笔帽任务；各回合长度总和与声明帧数一致。数据结构包含 gaze 状态、当前来源、世界坐标 gaze、各视角投影和相机位姿。数据结构／配置及汇总统计不能证明逐帧有效性、同步、显示映射或辅助效果；`display_latency_ms=0.0` 是保存的设置，不是实测延迟结果。
+
+### Two local i2rt trees, compared 2026-10-15 / 两份本地 i2rt 代码，比较于 2026-10-15
+
+This comparison uses tracked-file inventories, content hashes, source diffs, and a launcher `--print-command` check; no robot or headset was started.
+本次比较使用 Git 跟踪文件清单、内容哈希、源代码差异及启动入口的 `--print-command` 检查；未启动机器人或头显。
+
+- The sibling `../i2rt/` is a separate Git checkout: origin `https://github.com/Yuchen-Song/i2rt.git`, branch `peiran-gaze`, HEAD `eeedbbc` (`Clean up dual arm record scripts`). GazeGLIDE was on `peiran-gaze` at `4375d75` (`add camera calibration`); both working trees were clean before this documentation update. `third_party/i2rt/` is tracked as ordinary files in GazeGLIDE, with no independent Git root or submodule registration. Changes in one copy do not automatically update the other.
+  旁边的 `../i2rt/` 是独立 Git 仓库：origin 为 `https://github.com/Yuchen-Song/i2rt.git`，分支为 `peiran-gaze`，HEAD 为 `eeedbbc`（`Clean up dual arm record scripts`）。GazeGLIDE 当时位于 `peiran-gaze`，HEAD 为 `4375d75`（`add camera calibration`）；此次文档更新前两者工作区均干净。`third_party/i2rt/` 由 GazeGLIDE 作为普通文件跟踪，没有独立 Git 根目录或 submodule 登记。修改其中一份不会自动更新另一份。
+- The standalone tree has 99 tracked files; the vendored tree has 62. They share 31 relative paths, of which 25 are byte-identical and 6 differ; there are 68 standalone-only and 31 vendored-only paths. These counts compare paths, so relocated files count as unique paths.
+  独立仓库有 99 个跟踪文件，内置版本有 62 个。共有 31 个相同相对路径，其中 25 个内容完全相同、6 个不同；独立仓库特有路径为 68 个，内置版本特有路径为 31 个。这些数字按路径统计，因此迁移位置的文件会计入各自特有路径。
+- [The vendored README](../third_party/i2rt/README.md) describes a curated runtime. The standalone tree retains device setup, motor tools, examples, dataset utilities, and older recording/policy entry points. The vendored tree adds marker/plate GLIDE filters, manual task variants, CRAFT-hand runtimes and helpers, Quest hand-input helpers, and OpenTeleVision preprocessing support.
+  [内置版本 README](../third_party/i2rt/README.md) 将其定义为经过整理的运行代码。独立仓库保留设备配置、电机工具、示例、数据集工具及较早的录制／策略入口。内置版本增加马克笔／托盘 GLIDE 过滤器、手工任务变体、CRAFT 手运行程序及辅助模块、Quest 手部输入辅助模块和 OpenTeleVision 预处理支持。
+- Standalone `scripts/record_dual_arm_lerobot.py` and vendored `glide_runtime/teleop_gripper.py` both contain 1,880 lines and differ only in the three camera-serial defaults, replaced with placeholders in the vendored file. The shared YAM URDF/XML files, `pink_kinematics.py`, and `get_robot.py` are byte-identical.
+  独立版本 `scripts/record_dual_arm_lerobot.py` 和内置版本 `glide_runtime/teleop_gripper.py` 均为 1,880 行，仅三处相机序列号默认值不同，内置版本改用了占位符。共有的 YAM URDF／XML 文件、`pink_kinematics.py` 和 `get_robot.py` 内容完全相同。
+- The six changed common paths are `README.md`, `pyproject.toml`, `TeleVision/TeleVision.py`, `TeleVision/teleop_dual_arm.py`, `i2rt/motor_drivers/dm_driver.py`, and `i2rt/robots/motor_chain_robot.py`. Changes include optional input-only VR rendering, workspace clamping and virtual IK tracking in the direct dual-arm entry point, gripper-force handling, CAN retry/communication-error handling, initialization for no-gripper configurations, and expanded/changed dependencies. Do not treat the two trees as interchangeable.
+  六个内容不同的共有路径为 `README.md`、`pyproject.toml`、`TeleVision/TeleVision.py`、`TeleVision/teleop_dual_arm.py`、`i2rt/motor_drivers/dm_driver.py` 和 `i2rt/robots/motor_chain_robot.py`。差异包括可选的仅输入 VR 渲染、直接双臂入口中的工作空间裁剪和虚拟 IK 跟踪、夹爪力处理、CAN 重试／通信错误处理、无夹爪配置的属性初始化，以及扩充／调整的依赖；两份代码不能直接视为可互换。
+- [scripts/teleop.py](../scripts/teleop.py) selects scripts inside GazeGLIDE's `third_party/i2rt/glide_runtime/`; `--glide` selects the marker or plate filter. It also supplies `--fix-realsense-controls` and `--gripper-force-threshold 0` before advanced overrides. Low-level `import i2rt` still depends on the Python environment: both projects declare package name `i2rt` and version `0.0.1`. The documented GazeGLIDE installation uses `pip install -e "third_party/i2rt[spacemouse]"`; selecting a runtime script alone does not prove the installed driver package comes from the same tree.
+  [scripts/teleop.py](../scripts/teleop.py) 选择 GazeGLIDE 内 `third_party/i2rt/glide_runtime/` 下的脚本；`--glide` 选择马克笔或托盘过滤器。它还会在高级参数覆盖之前提供 `--fix-realsense-controls` 和 `--gripper-force-threshold 0`。底层 `import i2rt` 仍由 Python 环境决定：两个项目的包名均为 `i2rt`、版本均为 `0.0.1`。GazeGLIDE 文档要求使用 `pip install -e "third_party/i2rt[spacemouse]"` 安装；只确认所选运行脚本不能证明安装的驱动包也来自同一份目录。
+- The standalone recorder defaults to left wrist `335122270449` and right wrist `335122270643`, opposite to the supplied calibration metadata (left `335122270643`, right `335122270449`). This is a recorded configuration discrepancy; actual physical assignments require confirmation. Neither inspected tree contains `record_dual_arm_lerobot_native_gaze.py` or a camera-calibration implementation, and searches for gaze/waist/ChArUco calibration identifiers in Python/Markdown source returned no matches.
+  独立录制脚本默认左腕为 `335122270449`、右腕为 `335122270643`，与已提供标定元数据（左腕 `335122270643`、右腕 `335122270449`）相反。这是已发现的配置差异；实际物理对应关系仍需确认。两份已检查代码均未包含 `record_dual_arm_lerobot_native_gaze.py` 或相机标定实现，在 Python／Markdown 源文件中搜索 gaze／waist／ChArUco 标定标识也未找到匹配。
 
 ## 8. Open inputs and discussion / 待补充信息与讨论
 
